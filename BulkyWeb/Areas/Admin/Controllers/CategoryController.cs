@@ -2,8 +2,9 @@
 using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace BulkyBookWeb.Controllers
+namespace BulkyBookWeb.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -14,7 +15,7 @@ namespace BulkyBookWeb.Controllers
 
         public IActionResult Index()
         {
-            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();          
+            List<Category> objCategoryList = _unitOfWork.Category.GetAll().ToList();
             return View(objCategoryList);
         }
 
@@ -25,12 +26,12 @@ namespace BulkyBookWeb.Controllers
 
         [HttpPost]
         public IActionResult Create(Category obj)
-        {      
+        {
             if (ModelState.IsValid)
             {
                 if (obj.Name.ToLower() == obj.DisplayOrder.ToString())
                 {
-                    ModelState.AddModelError(String.Empty, "The DisplayOrder and Name cannot be equals");                  
+                    ModelState.AddModelError(string.Empty, "The DisplayOrder and Name cannot be equals");
                 }
                 else
                 {
@@ -45,7 +46,7 @@ namespace BulkyBookWeb.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
                 return NotFound();
             }
@@ -66,7 +67,7 @@ namespace BulkyBookWeb.Controllers
             {
                 if (obj.Name.ToLower() == obj.Name.ToString())
                 {
-                    ModelState.AddModelError(String.Empty, "The DisplayOrder and Name cannot be equals");
+                    ModelState.AddModelError(string.Empty, "The DisplayOrder and Name cannot be equals");
                 }
                 else
                 {
